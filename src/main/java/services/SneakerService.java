@@ -9,6 +9,14 @@ public class SneakerService
     private static int nextId = 1;  // (1)
     private ArrayList<Sneaker> inventory = new ArrayList<>();  // (2)
 
+    public Sneaker create()
+    {
+        Sneaker createdSneaker = new Sneaker(nextId++, "", "", "", 10.5f, 10, 99.99f);
+        inventory.add(createdSneaker);
+        saveData();
+        return createdSneaker;
+    }
+
     public Sneaker create(String name, String brand, String sport, float size, int quantity, float price) {
 
         Sneaker createdSneaker = new Sneaker(nextId++, name, brand, sport, size, quantity, price);
