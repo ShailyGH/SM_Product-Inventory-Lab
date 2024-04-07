@@ -35,9 +35,9 @@ public class SneakerServiceTest
         Assert.assertEquals(expectedName, actualName);
         Assert.assertEquals(expectedBrand, actualBrand);
         Assert.assertEquals(expectedSport, actualSport);
-        Assert.assertEquals(expectedSize, actualSize);
+        Assert.assertEquals(expectedSize, actualSize, 0.01);
         Assert.assertEquals(expectedQty, actualQty);
-        Assert.assertEquals(expectedPrice, actualPrice);
+        Assert.assertEquals(expectedPrice, actualPrice, 0.01);
 
     }
 }
