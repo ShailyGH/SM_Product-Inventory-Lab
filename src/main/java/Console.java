@@ -44,6 +44,4 @@ public class Console
         }
         return Integer.valueOf(input);
     }
-
-
 }

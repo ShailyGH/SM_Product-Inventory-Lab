@@ -8,7 +8,7 @@ public class SneakerServiceTest
     @Test
     public void createTest(){
 
-        // (1)
+        int expectedId = 1;
         String expectedName = "Stan Smith";
         String expectedBrand = "Adidas";
         String expectedSport = "Tennis";
@@ -16,12 +16,10 @@ public class SneakerServiceTest
         int expectedQty = 10;
         float expectedPrice = 80.00f;
 
-        // (2)
         SneakerService sneakerService = new SneakerService();
-        Sneaker testSneaker = sneakerService.create(expectedName, expectedBrand,
+        Sneaker testSneaker = sneakerService.create(expectedId, expectedName, expectedBrand,
                 expectedSport, expectedSize, expectedQty, expectedPrice);
 
-        // (3)
         int actualId = testSneaker.getId();
         String actualName = testSneaker.getName();
         String actualBrand = testSneaker.getBrand();
@@ -30,8 +28,7 @@ public class SneakerServiceTest
         int actualQty = testSneaker.getQty();
         float actualPrice = testSneaker.getPrice();
 
-        // (4)
-        Assert.assertEquals(Integer.class.getName(), new Integer(actualId).getClass().getName());
+        Assert.assertEquals(expectedId, actualId);
         Assert.assertEquals(expectedName, actualName);
         Assert.assertEquals(expectedBrand, actualBrand);
         Assert.assertEquals(expectedSport, actualSport);

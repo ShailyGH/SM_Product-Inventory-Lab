@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class SneakerService
 {
-    private static int nextId = 1;  // (1)
-    private ArrayList<Sneaker> inventory = new ArrayList<>();  // (2)
+    private static int nextId = 1;
+    private ArrayList<Sneaker> inventory = new ArrayList<>();
 
     public Sneaker create()
     {
@@ -17,9 +17,9 @@ public class SneakerService
         return createdSneaker;
     }
 
-    public Sneaker create(String name, String brand, String sport, float size, int quantity, float price) {
+    public Sneaker create(int id,String name, String brand, String sport, float size, int quantity, float price) {
 
-        Sneaker createdSneaker = new Sneaker(nextId++, name, brand, sport, size, quantity, price);
+        Sneaker createdSneaker = new Sneaker(id, name, brand, sport, size, quantity, price);
         inventory.add(createdSneaker);
 
         //saveData();
