@@ -50,4 +50,11 @@ public class Console
         }
         return Integer.valueOf(input);
     }
+
+    public static Integer getInteger()
+    {
+        String input = getInput();
+        return Integer.valueOf(input);
+
+    }
 }

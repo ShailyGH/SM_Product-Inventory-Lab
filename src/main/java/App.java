@@ -75,6 +75,41 @@ public class App
     {
         String[] menuItems = new String[]{"View Sneaker", "View Whiskey", "Exit"};
 
+        int choice = Console.getInput("View Product Menu", menuItems);
+
+        switch (choice)
+        {
+            case 1:
+                if(sneakerService.findAll().length >= 1)
+                {
+                    System.out.println("Choose a sneaker ID to view");
+                    System.out.println(sneakerService.findSneaker(Console.getInteger()).toString());
+                    Console.getInput();
+                }
+                else
+                {
+                    System.out.println("There is no sneakers in the inventory");
+                }
+                System.out.println("Press Enter to continue...");
+                Console.getInput();
+                break;
+            case 2:
+                if(whiskeyService.findAll().length >= 1)
+                {
+                    System.out.println("Choose a whiskey ID to view");
+                    System.out.println(whiskeyService.findWhiskey(Console.getInteger()).toString());
+                    Console.getInput();
+                }
+                else
+                {
+                    System.out.println("There is no whiskey in the inventory");
+                }
+                System.out.println("Press Enter to continue...");
+                Console.getInput();
+                break;
+            default:
+                break;
+        }
     }
     public void updateProductMenu()
     {
