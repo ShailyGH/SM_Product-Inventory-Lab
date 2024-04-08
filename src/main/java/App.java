@@ -1,10 +1,13 @@
+import com.sun.xml.internal.bind.v2.runtime.output.StAXExStreamWriterOutput;
 import models.Sneaker;
 import services.SneakerService;
 import services.WhiskeyService;
 
 public class App
 {
-    private SneakerService sneakerService = new SneakerService(); // (1)
+    private SneakerService sneakerService = new SneakerService();
+    private WhiskeyService whiskeyService = new WhiskeyService();
+
     public static void main(String... args)
     {
         App application = new App(); // (2)
@@ -56,10 +59,13 @@ public class App
         {
             case 1:
                 sneakerService.create();
-
+                System.out.println("A new sneaker has been added to the inventory. Press Enter to continue...");
+                Console.getInput();
                 break;
             case 2:
-                //WhiskeyService.create();
+                whiskeyService.create();
+                System.out.println("A new Whiskey has been added to the inventory. Press Enter to continue...");
+                Console.getInput();
                 break;
             default:
                 break;

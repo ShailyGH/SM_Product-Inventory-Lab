@@ -13,6 +13,12 @@ public class Console
                 "**************************************************\n\n");
     }
 
+    public static String getInput ()
+    {
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextLine();
+    }
+
     public static int getInput(String header, String[] options)
     {
         String printOptions = header + "\n";
