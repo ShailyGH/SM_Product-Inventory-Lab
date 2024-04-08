@@ -1,5 +1,6 @@
 import com.sun.xml.internal.bind.v2.runtime.output.StAXExStreamWriterOutput;
 import models.Sneaker;
+import models.Whiskey;
 import services.SneakerService;
 import services.WhiskeyService;
 
@@ -122,5 +123,43 @@ public class App
     public void reportsMenu()
     {
         String[] menuItems = new String[]{"View Sneaker Report", "View Whiskey Report", "Exit"};
+
+        int choice = Console.getInput("Product Reports Menu", menuItems);
+
+        switch (choice)
+        {
+            case 1:
+                if(sneakerService.findAll().length >= 1)
+                {
+                    System.out.println("Total number of sneakers in inventory: " + sneakerService.findAll().length);
+                    for (Sneaker sneaker : sneakerService.findAll())
+                    {
+                        System.out.println(sneaker.toString());
+                    }
+                    System.out.println("Press Enter to continue...");
+                }
+                else
+                {
+                    System.out.println("There is no sneakers in the inventory");
+                }
+                break;
+            case 2:
+                if(whiskeyService.findAll().length >= 1)
+                {
+                    System.out.println("Total number of whiskey in inventory: " + whiskeyService.findAll().length);
+                    for (Whiskey whiskey : whiskeyService.findAll())
+                    {
+                        System.out.println(whiskey.toString());
+                    }
+                    System.out.println("Press Enter to continue...");
+                }
+                else
+                {
+                    System.out.println("There is no whiskey in the inventory");
+                }
+                break;
+            default:
+                break;
+        }
     }
 }
