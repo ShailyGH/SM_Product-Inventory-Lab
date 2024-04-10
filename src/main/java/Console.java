@@ -10,7 +10,7 @@ public class Console
                 "***           Welcome and Bienvenue            ***\n" +
                 "***                    to                      ***\n" +
                 "***          ZipCo Inventory Manager           ***\n" +
-                "**************************************************\n\n");
+                "**************************************************");
     }
 
     public static String getInput ()
@@ -28,6 +28,7 @@ public class Console
         }
 
         System.out.println(printOptions);
+        System.out.println("Please enter your selection");
 
         return Console.getSelection(options.length);
     }
@@ -55,6 +56,5 @@ public class Console
     {
         String input = getInput();
         return Integer.valueOf(input);
-
     }
 }

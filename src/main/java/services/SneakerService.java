@@ -13,7 +13,7 @@ public class SneakerService
     {
         Sneaker createdSneaker = new Sneaker(nextId++, "", "", "", 10.5f, 10, 99.99f);
         inventory.add(createdSneaker);
-        saveData();
+        //saveData();
         return createdSneaker;
     }
 
