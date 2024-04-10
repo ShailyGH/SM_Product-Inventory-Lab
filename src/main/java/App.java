@@ -4,6 +4,8 @@ import models.Whiskey;
 import services.SneakerService;
 import services.WhiskeyService;
 
+import static java.lang.Thread.sleep;
+
 public class App
 {
     private SneakerService sneakerService = new SneakerService();
@@ -65,12 +67,12 @@ public class App
         switch (choice)
         {
             case 1:
-                sneakerService.create();
-                System.out.println(sneakerService.findSneaker(sneakerService.findAll().length) + " has been added to the inventory");
+                Sneaker newSneaker = sneakerService.create();
+                System.out.println(sneakerService.findSneaker(newSneaker.getId()) + " has been added to the inventory");
                 break;
             case 2:
-                whiskeyService.create();
-                System.out.println(whiskeyService.findWhiskey(whiskeyService.findAll().length) + " has been added to the inventory");
+                Whiskey newWhiskey = whiskeyService.create();
+                System.out.println(whiskeyService.findWhiskey(newWhiskey.getId()) + " has been added to the inventory");
                 break;
             default:
                 break;
@@ -82,14 +84,21 @@ public class App
         String[] menuItems = new String[]{"View Sneaker", "View Whiskey", "Exit"};
 
         int choice = Console.getInput("View Product Menu", menuItems);
-
+        int count = 1;
         switch (choice)
         {
             case 1:
                 if(sneakerService.findAll().length >= 1)
                 {
                     System.out.println("Choose a sneaker ID to view - enter an ID between 1 and " + sneakerService.findAll().length);
-                    System.out.println(sneakerService.findSneaker(Console.getInteger()));
+                    //System.out.println(sneakerService.findSneaker(Console.getInteger()));
+                    for (Sneaker sneaker : sneakerService.findAll()) {
+                        if (Console.getInteger() == count)
+                        {
+                            System.out.println(sneakerService.findSneaker(sneaker.getId()));
+                        }
+                        count++;
+                    }
                 }
                 else
                 {
@@ -102,12 +111,18 @@ public class App
                 {
                     System.out.println("Choose a whiskey ID to view - enter an ID between 1 and " + whiskeyService.findAll().length);
                     System.out.println(whiskeyService.findWhiskey(Console.getInteger()));
+                    for (Whiskey whiskey : whiskeyService.findAll()) {
+                        if (Console.getInteger() == count)
+                        {
+                            System.out.println(whiskeyService.findWhiskey(whiskey.getId()));
+                        }
+                        count++;
+                    }
                 }
                 else
                 {
                     System.out.println("There is no whiskey in the inventory");
                 }
-
                 break;
             default:
                 break;
@@ -120,23 +135,30 @@ public class App
 
         int choice = Console.getInput("Update Product Menu", menuItems);
         int updateProductSelection;
-
+        int count = 1;
         switch (choice)
         {
             case 1:
                 if(sneakerService.findAll().length >= 1)
                 {
                     System.out.println("Choose a sneaker ID to update from the list below");
-
-                    for (Sneaker sneaker: sneakerService.findAll())
+                    for (Sneaker sneaker : sneakerService.findAll())
                     {
-                        System.out.println(sneaker.toString());
+                        System.out.println(count + " - " + sneaker.toString());
+                        count ++;
                     }
                     updateProductSelection = Console.getInteger();
-                    System.out.println(sneakerService.findSneaker(updateProductSelection));
-                    sneakerService.delete(updateProductSelection);
-                    sneakerService.create();
-                    System.out.println("Sneaker updated...");
+                    count = 1;
+                    for (Sneaker sneaker : sneakerService.findAll()) {
+                        if (updateProductSelection == count)
+                        {
+                            System.out.println(sneakerService.findSneaker(sneaker.getId()) + " has been removed from the inventory");
+                            sneakerService.delete(sneaker.getId());
+                        }
+                        count++;
+                    }
+                    Sneaker newSneaker = sneakerService.create();
+                    System.out.println(sneakerService.findSneaker(newSneaker.getId()) + " has been added to the inventory");
                 }
                 else
                 {
@@ -147,16 +169,23 @@ public class App
                 if(whiskeyService.findAll().length >= 1)
                 {
                     System.out.println("Choose a whiskey ID to update from the list below");
-
-                    for (Whiskey whiskey: whiskeyService.findAll())
+                    for (Whiskey whiskey : whiskeyService.findAll())
                     {
-                        System.out.println(whiskey.toString());
+                        System.out.println(count + " - " + whiskey.toString());
+                        count++;
                     }
                     updateProductSelection = Console.getInteger();
-                    System.out.println(whiskeyService.findWhiskey(updateProductSelection));
-                    whiskeyService.delete(updateProductSelection);
-                    whiskeyService.create();
-                    System.out.println("Whiskey updated...");
+                    count = 1;
+                    for (Whiskey whiskey : whiskeyService.findAll()) {
+                        if (updateProductSelection == count)
+                        {
+                            System.out.println(whiskeyService.findWhiskey(whiskey.getId()) + " has been removed from the inventory");
+                            whiskeyService.delete(whiskey.getId());
+                        }
+                        count++;
+                    }
+                    Whiskey newWhiskey = whiskeyService.create();
+                    System.out.println(whiskeyService.findWhiskey(newWhiskey.getId()) + " has been added to the inventory");
                 }
                 else
                 {
@@ -174,6 +203,7 @@ public class App
 
         int choice = Console.getInput("Delete Product Menu", menuItems);
         int deleteProductSelection;
+        int count = 1;
 
         switch (choice)
         {
@@ -181,14 +211,21 @@ public class App
                 if(sneakerService.findAll().length >= 1)
                 {
                     System.out.println("Choose a sneaker ID to delete from the list below");
-
-                    for (int i = 1; i <= sneakerService.findAll().length ; i++)
+                    for (Sneaker sneaker : sneakerService.findAll())
                     {
-                        System.out.println(i + " - "+ sneakerService.findSneaker(i).toString());
+                        System.out.println(count + " - " + sneaker.toString());
+                        count ++;
                     }
                     deleteProductSelection = Console.getInteger();
-                    System.out.println("Deleted " + sneakerService.findSneaker(deleteProductSelection));
-                    sneakerService.delete(deleteProductSelection);
+                    count = 1;
+                    for (Sneaker sneaker : sneakerService.findAll()) {
+                        if (deleteProductSelection == count)
+                        {
+                            System.out.println(sneakerService.findSneaker(sneaker.getId()) + " has been removed from the inventory");
+                            sneakerService.delete(sneaker.getId());
+                        }
+                        count++;
+                    }
                 }
                 else
                 {
@@ -199,14 +236,21 @@ public class App
                 if(whiskeyService.findAll().length >= 1)
                 {
                     System.out.println("Choose a whiskey ID to delete from the list below");
-
-                    for (int i = 1; i <= whiskeyService.findAll().length ; i++)
+                    for (Whiskey whiskey : whiskeyService.findAll())
                     {
-                        System.out.println(i + " - "+ whiskeyService.findWhiskey(i).toString());
+                        System.out.println(count + " - " + whiskey.toString());
+                        count++;
                     }
                     deleteProductSelection = Console.getInteger();
-                    System.out.println("Deleted " + whiskeyService.findWhiskey(deleteProductSelection));
-                    whiskeyService.delete(deleteProductSelection);
+                    count = 1;
+                    for (Whiskey whiskey : whiskeyService.findAll()) {
+                        if (deleteProductSelection == count)
+                        {
+                            System.out.println(whiskeyService.findWhiskey(whiskey.getId()) + " has been removed from the inventory");
+                            whiskeyService.delete(whiskey.getId());
+                        }
+                        count++;
+                    }
                 }
                 else
                 {

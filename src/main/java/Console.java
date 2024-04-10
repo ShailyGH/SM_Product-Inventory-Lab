@@ -27,7 +27,7 @@ public class Console
             printOptions += String.format("%d. %s", i+1, options[i]) + "\n";
         }
 
-        System.out.println(printOptions);
+        System.out.print(printOptions);
         System.out.println("Please enter your selection");
 
         return Console.getSelection(options.length);
