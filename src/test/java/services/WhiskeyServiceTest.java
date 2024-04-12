@@ -12,7 +12,6 @@ public class WhiskeyServiceTest
     @Test
     public void createTest(){
 
-        int expectedID = 20;
         String expectedName = "Honey Whiskey";
         String expectedBrand = "Jack Daniels";
         float expectedVolume = 750.5f;
@@ -20,17 +19,15 @@ public class WhiskeyServiceTest
         float expectedPrice = 35.99f;
 
         WhiskeyService whiskeyService = new WhiskeyService();
-        Whiskey testwhiskey = whiskeyService.create(expectedID, expectedName, expectedBrand,
+        Whiskey testwhiskey = whiskeyService.create(expectedName, expectedBrand,
                 expectedVolume, expectedQty, expectedPrice);
 
-        int actualId = testwhiskey.getId();
         String actualName = testwhiskey.getName();
         String actualBrand = testwhiskey.getBrand();
         float actualVolume = testwhiskey.getVolume();
         int actualQty = testwhiskey.getQty();
         float actualPrice = testwhiskey.getPrice();
 
-        Assert.assertEquals(expectedID, actualId);
         Assert.assertEquals(expectedName, actualName);
         Assert.assertEquals(expectedBrand, actualBrand);
         Assert.assertEquals(expectedVolume, actualVolume, 0.01);
