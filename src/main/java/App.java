@@ -1,4 +1,4 @@
-import com.sun.xml.internal.bind.v2.runtime.output.StAXExStreamWriterOutput;
+//import com.sun.xml.internal.bind.v2.runtime.output.StAXExStreamWriterOutput;
 import models.Sneaker;
 import models.Whiskey;
 import services.SneakerService;
@@ -185,7 +185,7 @@ public class App
                     System.out.println("Choose a sneaker ID to update from the list below");
                     for (Sneaker sneaker : sneakerService.findAll())
                     {
-                        System.out.println(sneaker.getId() + " - " + sneaker.toString());
+                        System.out.println(sneaker.getId() + " - " + sneaker);
                     }
                     updateProductSelection = Console.getInteger();
                     for (Sneaker sneaker : sneakerService.findAll()) {
@@ -210,7 +210,7 @@ public class App
                     System.out.println("Choose a whiskey ID to update from the list below");
                     for (Whiskey whiskey : whiskeyService.findAll())
                     {
-                        System.out.println(whiskey.getId() + " - " + whiskey.toString());
+                        System.out.println(whiskey.getId() + " - " + whiskey);
                     }
                     updateProductSelection = Console.getInteger();
                     for (Whiskey whiskey : whiskeyService.findAll()) {
