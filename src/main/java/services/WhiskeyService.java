@@ -20,8 +20,8 @@ public class WhiskeyService
 
     public WhiskeyService()
     {
-        //loadDataCSV();
-        //loadDataJSON();
+        loadDataCSV();
+        loadDataJSON();
     }
 
     public Whiskey create()

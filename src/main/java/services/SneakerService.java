@@ -17,8 +17,8 @@ public class SneakerService {
     private ArrayList<Sneaker> inventory = new ArrayList<>();
 
     public SneakerService() {
-        //loadDataCSV();
-        //loadDataJSON();
+        loadDataCSV();
+        loadDataJSON();
     }
 
     public Sneaker create() {
