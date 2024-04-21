@@ -1,5 +1,9 @@
 package services;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import models.Sneaker;
 import models.Whiskey;
 
@@ -16,7 +20,8 @@ public class WhiskeyService
 
     public WhiskeyService()
     {
-        loadDataCSV();
+        //loadDataCSV();
+        //loadDataJSON();
     }
 
     public Whiskey create()
@@ -24,6 +29,7 @@ public class WhiskeyService
         Whiskey createdWhiskey = new Whiskey(nextId++, "", "", 10.5f, 10, 99.99f);
         inventory.add(createdWhiskey);
         writeDataCSV();
+        writeDataJSON();
         return createdWhiskey;
     }
 
@@ -33,6 +39,7 @@ public class WhiskeyService
         inventory.add(createdWhiskey);
 
         writeDataCSV();
+        writeDataJSON();
         return createdWhiskey;
     }
 
@@ -65,6 +72,7 @@ public class WhiskeyService
         if(deleteFlag)
         {
             writeDataCSV();
+            writeDataJSON();
         }
         return deleteFlag;
     }
@@ -72,8 +80,11 @@ public class WhiskeyService
     public void writeDataCSV() {
         try
         {
-           // String csvFile = "/Users/shail/Desktop/Whiskey.csv";
-            String csvFile = "/Users/shaily/Desktop/Whiskey.csv";
+
+            String csvFile = "whiskey.csv";
+
+            // String csvFile = "/Users/shail/Desktop/Whiskey.csv";
+
             FileWriter writer = new FileWriter(csvFile); //(1)
             CSVUtils.writeLine(writer, new ArrayList<String>(Arrays.asList(String.valueOf(nextId))));  // (2)
 
@@ -104,8 +115,9 @@ public class WhiskeyService
         try
         {
             // (1)
-           // File file = new File("/Users/shail/Desktop/", "Whiskey.csv");
-            File file = new File("/Users/shaily/Desktop/", "Whiskey.csv");
+
+            File file = new File("whiskey.csv");
+            // File file = new File("/Users/shail/Desktop/", "Whiskey.csv");
             String line = "";
             String csvSplitBy = ",";
 
@@ -134,6 +146,32 @@ public class WhiskeyService
                 // (5)
                 inventory.add(new Whiskey(id, name, brand, volume, qty, price));
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void writeDataJSON()
+    {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
+            writer.writeValue(new File("whiskey.json"), inventory);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void loadDataJSON()
+    {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            this.inventory = objectMapper.readValue(new File("whiskey.json"), new TypeReference<ArrayList<Whiskey>>(){});
+            int maxId = 0;
+            for (Whiskey w : inventory) {
+                if (w.getId() > maxId) {
+                    maxId = w.getId();
+                }
+            }
+            nextId = ++maxId;
         } catch (IOException e) {
             e.printStackTrace();
         }

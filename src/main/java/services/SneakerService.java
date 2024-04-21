@@ -1,5 +1,9 @@
 package services;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import models.Sneaker;
 
 import java.io.*;
@@ -13,13 +17,15 @@ public class SneakerService {
     private ArrayList<Sneaker> inventory = new ArrayList<>();
 
     public SneakerService() {
-        loadDataCSV();
+        //loadDataCSV();
+        //loadDataJSON();
     }
 
     public Sneaker create() {
         Sneaker createdSneaker = new Sneaker(nextId++, "", "", "", 10.5f, 10, 99.99f);
         inventory.add(createdSneaker);
         writeDataCSV();
+        writeDataJSON();
         return createdSneaker;
     }
 
@@ -29,6 +35,7 @@ public class SneakerService {
         inventory.add(createdSneaker);
 
         writeDataCSV();
+        writeDataJSON();
         return createdSneaker;
     }
 
@@ -58,6 +65,7 @@ public class SneakerService {
         boolean deleteFlag = this.inventory.remove(findSneaker(id));
         if (deleteFlag) {
             writeDataCSV();
+            writeDataJSON();
         }
         return deleteFlag;
     }
@@ -65,7 +73,11 @@ public class SneakerService {
     public void writeDataCSV() {
         try
         {
-            String csvFile = "/Users/shaily/Desktop/Sneaker.csv";
+
+            String csvFile = "sneaker.csv";
+
+            //String csvFile = "/Users/shaily/Desktop/Sneaker.csv";
+
             FileWriter writer = new FileWriter(csvFile); //(1)
             CSVUtils.writeLine(writer, new ArrayList<String>(Arrays.asList(String.valueOf(nextId))));  // (2)
 
@@ -97,8 +109,11 @@ public class SneakerService {
         try
         {
             // (1)
+
+            File file = new File("sneaker.csv");
+
             //File file = new File("/Users/shail/Desktop/", "Sneaker.csv");
-            File file = new File("/Users/shaily/Desktop/", "Sneaker.csv");
+
             String line = "";
             String csvSplitBy = ",";
 
@@ -128,6 +143,32 @@ public class SneakerService {
                 // (5)
                 inventory.add(new Sneaker(id, name, brand, sport, size, qty, price));
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void writeDataJSON()
+    {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
+            writer.writeValue(new File("sneaker.json"), inventory);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void loadDataJSON()
+    {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            this.inventory = objectMapper.readValue(new File("sneaker.json"), new TypeReference<ArrayList<Sneaker>>(){});
+            int maxId = 0;
+            for (Sneaker s : inventory) {
+                if (s.getId() > maxId) {
+                    maxId = s.getId();
+                }
+            }
+            nextId = ++maxId;
         } catch (IOException e) {
             e.printStackTrace();
         }
